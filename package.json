@@ -3,7 +3,6 @@
 	"version": "1.0.0",
 	"description": "",
 	"main": "index.js",
-	"type": "module",
 	"scripts": {
 		"format": "npx @biomejs/biome format --write",
 		"lint": "npx @biomejs/biome lint --write",
@@ -17,16 +16,15 @@
 		"cors": "^2.8.6",
 		"dotenv": "^17.4.1",
 		"express": "^5.2.1",
+		"jsonwebtoken": "^9.0.3",
 		"pg": "^8.20.0",
 		"zod": "^4.3.6"
 	},
 	"devDependencies": {
 		"@biomejs/biome": "2.4.11"
 	},
-
 	"engines": {
 		"node": ">=20"
 	},
-
 	"packageManager": "npm@11.6.2"
 }
