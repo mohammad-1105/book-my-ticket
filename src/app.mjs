@@ -5,6 +5,10 @@ import {
 	errorHandler,
 	notFoundHandler,
 } from "./middlewares/error-handlers.mjs";
+import { createAuthRouter } from "./routes/auth.routes.mjs";
+import { createBookingRouter } from "./routes/booking.routes.mjs";
+import { createMovieRouter } from "./routes/movie.routes.mjs";
+import { createSeatRouter } from "./routes/seat.routes.mjs";
 
 export const createExpressApp = () => {
 	const app = express();
@@ -21,6 +25,15 @@ export const createExpressApp = () => {
 			uptime: process.uptime(),
 		});
 	});
+
+	app.use("/api/auth", createAuthRouter());
+	app.use("/api", createMovieRouter());
+	app.use("/api", createSeatRouter());
+	app.use("/api", createBookingRouter());
+
+	app.use("/", createAuthRouter({ legacy: true }));
+	app.use("/", createSeatRouter({ legacy: true }));
+	app.use("/", createBookingRouter({ legacy: true }));
 
 	app.get("/", (_req, res) => {
 		res.sendFile(`${publicDir}/index.html`);
