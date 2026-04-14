@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
 
-import { env } from "../config/env.mjs";
+
 
 export const authenticateToken = (req, res, next) => {
 	const authHeader = req.headers.authorization;
@@ -16,7 +16,7 @@ export const authenticateToken = (req, res, next) => {
 	}
 
 	try {
-		req.user = jwt.verify(token, env.JWT_TOKEN_SECRET);
+		req.user = jwt.verify(token, process.env.JWT_TOKEN_SECRET);
 		next();
 	} catch {
 		return res.status(403).json({

@@ -1,7 +1,7 @@
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
+import "dotenv/config";
 
-import { env } from "../config/env.mjs";
 import {
 	createUser,
 	findUserByUsername,
@@ -59,8 +59,8 @@ export const loginUser = async (username, password) => {
 			id: user.id,
 			username: user.username,
 		},
-		env.JWT_TOKEN_SECRET,
-		{ expiresIn: env.JWT_TOKEN_EXPIRES_IN },
+		process.env.JWT_TOKEN_SECRET,
+		{ expiresIn: process.env.JWT_TOKEN_EXPIRES_IN },
 	);
 
 	return {
