@@ -13,12 +13,20 @@ import {
 	registerUserSchema,
 } from "../zod-schema/user-credential-schema.mjs";
 
+function getValidationMessages(error) {
+	return error.issues.map((issue) => issue.message);
+}
+
 export const registerUser = async (userData) => {
 	const validation = registerUserSchema.safeParse(userData);
 
 	if (!validation.success) {
-		const errors = validation.error.errors.map((err) => err.message);
+		const errors = getValidationMessages(validation.error);
 		throw createHttpError(400, "Validation failed", errors);
+	}
+
+	if (findUserByUsername(userData.username)) {
+		throw createHttpError(409, "An account with that username already exists");
 	}
 
 	const hashedPassword = await bcrypt.hash(userData.password, 10);
@@ -31,7 +39,7 @@ export const loginUser = async (username, password) => {
 	const validation = loginUserSchema.safeParse({ username, password });
 
 	if (!validation.success) {
-		const errors = validation.error.errors.map((err) => err.message);
+		const errors = getValidationMessages(validation.error);
 		throw createHttpError(400, "Validation failed", errors);
 	}
 

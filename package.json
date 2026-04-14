@@ -4,6 +4,8 @@
 	"description": "",
 	"main": "index.js",
 	"scripts": {
+		"build": "npm run check",
+		"check": "node --check index.mjs && node --check public/index.mjs",
 		"format": "npx @biomejs/biome format --write",
 		"lint": "npx @biomejs/biome lint --write",
 		"dev": "node --watch index.mjs",
